@@ -8,9 +8,17 @@ float fn1(float x)
 	func = pow(x,3) -3*x + 1.06;
 	return func;
 }
+float fn3(float x)
+{
+    float func;
+	func = pow(x,3) -3*x + 1.06;
+	return func;
+}
 float fx(float x)
 {
-	return pow(x,3) - 3*x + 1.06;
+	float func;
+	func = pow(x,3) -3*x + 1.06;
+	return func;
 }
 float dfx(float x)
 {
@@ -19,6 +27,7 @@ float dfx(float x)
 void bisection()
 {
 	float a, b,x;
+	int i = 1;
 	printf("\nEquation to be solved = x^3 - 3x + 1.06\n");
 	printf("Enter a number = ");
 	scanf("%f",&a);
@@ -32,8 +41,18 @@ void bisection()
 	else
 	{
 		printf("\nBisection Method\n");
+		printf("\nN\t");       
+		printf("A\t\t");
+		printf("B\t\t");
+		printf("Xn+1\t\t");
+		printf("f(Xn+1)\n\n");
 		do{
+			printf("%d\t",i);
+			printf("%f\t",a);
+			printf("%f\t",b);
 			x=(a+b)/2;
+			printf("%f\t",x);
+			printf("%f\n",fn1(x));
 			if(fn1(x) == 0)
 			{
 				printf("The root is = %.4f",x);
@@ -46,10 +65,48 @@ void bisection()
 		printf("The root is = %.4f",x);
 	}
 }
-/*void regula_falsi()
+void regula_falsi()
 {
+	int itr = 1;
+    float a,b,x;
+    printf("\nEnter the values of a, b :\n");
+    scanf("%f %f",&a, &b);
+    if (fn3(a)*fn3(b) > 0)
+    {
+    	printf("\nWrong range selected.\n");
+    	regula_falsi();
+	}
+    else
+	{
+		printf("\nRegula Falsi Method\n");
+		printf("\nN\t");       
+		printf("Xn-1\t\t");
+		printf("Xn\t\t");
+		printf("f(Xn-1)\t\t");
+		printf("f(Xn)\t\t");
+		printf("Xn+1\t\t");
+		printf("f(Xn+1)\n\n");
+		do{
+		printf("%d\t",itr);
+		printf("%f\t",a);
+		printf("%f\t",b);
+		printf("%f\t",fn3(a));
+		printf("%f\t",fn3(b));
+		x = a - (((b - a)*fn3(a)) / (fn3(b) - fn3(a)));
+        printf("%f\t",x);
+        printf("%f\n",fn3(x));
+		itr++;
+        if (fn3(a) * fn3(x) < 0 )
+        	b = x;
+        else
+        	a = x;
+	    //printf("\n%d\t\t%f %f %f %f\n",itr,a,b,x,fn3(x)) ;   
+       	}while (fabs(fn3(x))>=0.0001);
+       	printf("\nThe root is = %f\n", x);
+  	}     
 	
-}*/
+}
+
 void newton_raphson()
 {
 	float a,b,c;
@@ -61,7 +118,7 @@ void newton_raphson()
 	if(fx(a)*fx(b)>0)
 	{
 		printf("Wrong Range selected!!!!\n");
-		main();
+		newton_raphson();
 	}	
 	else
 	{
@@ -79,6 +136,7 @@ void newton_raphson()
 			    printf("%f\t\t",c);
           		    printf("%f\n",fx(c));
 		  }while(fabs(fx(c))>0.0001);
+		  printf("The root is = %f",c);
 	}
 }
 int main()
@@ -94,9 +152,9 @@ int main()
 			case 1:
 				bisection();
 			break;
-			/*case 2:
+			case 2:
 				regula_falsi();
-			break;*/
+			break;
 			case 3:
 				newton_raphson();
 			break;
